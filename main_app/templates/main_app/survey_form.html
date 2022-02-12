@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+  <h5>Welcome! Please fill out information about your day below.</h5>
+
+
+<!-- empty action attribute will post to the same url in the address bar -->
+<form action="{% url 'generate_drink' %}" method="POST">
+  {% csrf_token %}
+  <table>
+    {{ form.as_table }}
+  </table>
+  <input type="submit" value="Get My Drink!" class="btn">
+</form>
+
+<script>
+
+  const selectEl = document.getElementById('id_liquor_pref');
+  M.FormSelect.init(selectEl);
+  const selectEl2 = document.getElementById('id_q1');
+  M.FormSelect.init(selectEl2);
+  const selectEl3 = document.getElementById('id_q2');
+  M.FormSelect.init(selectEl3);
+  const selectEl4 = document.getElementById('id_q3');
+  M.FormSelect.init(selectEl4);
+
+</script>
+
+
+{% endblock %}

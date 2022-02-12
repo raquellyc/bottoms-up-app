@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<div>
+    <h3>Ingredients:</h3>
+    <p>{{ drink_ingredient1 }}</p>
+    <p>{{ drink_ingredient2 }}</p>
+     {% if drink_ingredient3 != None %}
+    <p> {{ drink_ingredient3 }}</p>
+     {% endif %}
+     {% if drink_ingredient4 != None %}
+    <p> {{ drink_ingredient4 }}</p>
+     {% endif %}
+     {% if drink_ingredient5 != None %}
+    <p> {{ drink_ingredient5 }}</p>
+     {% endif %}
+     {% if drink_ingredient6 != None %}
+    <p> {{ drink_ingredient6 }}</p>
+     {% endif %}
+    {% if drink_ingredient7 != None %}
+    <p> {{ drink_ingredient7 }}</p>
+     {% endif %}
+     {% if drink_ingredient8 != None %}
+    <p> {{ drink_ingredient8 }}</p>
+     {% endif %}
+  </div>
+  <h3>Instructions:</h3>
+  <p>{{ drink_instructions }}</p>
+  <img src="{{ drink_pic }}">
+
+  {% endblock %}
