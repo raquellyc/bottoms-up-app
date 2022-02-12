@@ -26,7 +26,7 @@ ANSWERS3 = (
 class Drink(models.Model):
     name = models.CharField(max_length=100)
     ingredients = models.TextField(max_length=250)
-    instructions = models.TextField(max_length=250)
+    instructions = models.TextField(max_length=500)
     image = models.CharField(max_length=100)
 
     def __str__(self):
@@ -35,25 +35,25 @@ class Drink(models.Model):
 
 
 class Survey(models.Model):
-    liquor_pref = models.CharField(
+    liquor_pref = models.CharField('What is your preferred liquor?',
         max_length=1,
         choices=LIQUORS,
         default=LIQUORS[0][0],
     )
-    q1 = models.CharField(
+    q1 = models.CharField('Was Today work or play?',
         max_length=1,
         choices=ANSWERS1,
         default=ANSWERS1[0][0],
     )
-    q2 = models.CharField(
+    q2 = models.CharField('Are you feeling adventurous or classic?',
         max_length=1,
         choices=ANSWERS2,
         default=ANSWERS2[0][0],
     )
-    q3 = models.CharField(
+    q3 = models.CharField('Do you need a pick-me-up or to relax?',
         max_length=1,
         choices=ANSWERS3,
         default=ANSWERS3[0][0],
     )
    
-  
+    
