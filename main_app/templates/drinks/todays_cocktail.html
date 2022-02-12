@@ -2,6 +2,7 @@
 {% block content %}
 
 
+
 <div>
     <h3>Ingredients:</h3>
     <p>{{ drink_ingredient1 }}</p>
@@ -27,6 +28,6 @@
   </div>
   <h3>Instructions:</h3>
   <p>{{ drink_instructions }}</p>
-  <img src="{{ drink_pic }}">
+  <img class="card-panel" id="drinkpic" src="{{ drink_pic }}">
 
   {% endblock %}

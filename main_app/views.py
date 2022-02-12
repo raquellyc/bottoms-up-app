@@ -4,7 +4,7 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Drink, Survey
+from .models import LIQUORS, Drink, Survey
 import requests
 
 # Create your views here.
@@ -40,34 +40,20 @@ def signup(request):
   return render(request, 'registration/signup.html', context)
 
 def generate_drink(request):
-    form = SurveyForm()
-    cocktail = requests.get('https://www.thecocktaildb.com/api/json/v1/1/random.php').json()
-        
-    drink_name = cocktail['drinks'][0]['strDrink']
-    drink_instructions = cocktail['drinks'][0]['strInstructions']
-    drink_pic = cocktail['drinks'][0]['strDrinkThumb']
-    drink_ingredient1 = cocktail['drinks'][0]['strIngredient1']
-    drink_ingredient2 = cocktail['drinks'][0]['strIngredient2']
-    drink_ingredient3 = cocktail['drinks'][0]['strIngredient3']
-    drink_ingredient4 = cocktail['drinks'][0]['strIngredient4']
-    drink_ingredient5 = cocktail['drinks'][0]['strIngredient5']
-    drink_ingredient6 = cocktail['drinks'][0]['strIngredient6']
-    drink_ingredient7 = cocktail['drinks'][0]['strIngredient7']
-    drink_ingredient8 = cocktail['drinks'][0]['strIngredient8']
-    return render(request, 'drinks/todays_cocktail.html', {
-        'drink_name': drink_name, 
-        'drink_instructions': drink_instructions, 
-        'drink_pic': drink_pic,
-        'drink_ingredient1': drink_ingredient1,
-        'drink_ingredient2': drink_ingredient2,
-        'drink_ingredient3': drink_ingredient3,
-        'drink_ingredient4': drink_ingredient4,
-        'drink_ingredient5': drink_ingredient5,
-        'drink_ingredient6': drink_ingredient6,
-        'drink_ingredient7': drink_ingredient7,
-        'drink_ingredient8': drink_ingredient8,
-    })
-    # return render(request, 'drinks/todays_cocktail.html', {'form': form})
+    if Survey.liquor_pref == LIQUORS[0][0]:
+        cocktail = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=vodka').json()
+        print(cocktail)
+    # elif Survey.liquor_pref == LIQUORS[0][1]:
+    #     cocktail = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=gin').json()
+    # elif Survey.liquor_pref == LIQUORS[0][2]:
+    #     cocktail = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=rum').json()
+    # elif Survey.liquor_pref == LIQUORS[0][3]:
+    #     cocktail = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=tequila').json()
+    else:
+        cocktail = 'None'
+    
+    print(cocktail)
+    return render(request, 'drinks/todays_cocktail.html', {'cocktail': cocktail })
 
 # Class-Based View (CBV)
 class SurveyForm(LoginRequiredMixin, CreateView):
