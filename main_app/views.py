@@ -40,19 +40,23 @@ def signup(request):
   return render(request, 'registration/signup.html', context)
 
 def generate_drink(request):
-    if Survey.liquor_pref == LIQUORS[0][0]:
+    if request.POST['liquor_pref'] == LIQUORS[0][0]:
         cocktail = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=vodka').json()
         print(cocktail)
-    # elif Survey.liquor_pref == LIQUORS[0][1]:
-    #     cocktail = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=gin').json()
-    # elif Survey.liquor_pref == LIQUORS[0][2]:
-    #     cocktail = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=rum').json()
-    # elif Survey.liquor_pref == LIQUORS[0][3]:
-    #     cocktail = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=tequila').json()
+    elif request.POST['liquor_pref'] == 'G':
+        cocktail = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=gin').json()
+        print(cocktail)
+    elif request.POST['liquor_pref'] == 'R':
+        cocktail = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=rum').json()
+        print(cocktail)
+    elif request.POST['liquor_pref'] == 'T':
+        cocktail = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=tequila').json()
+        print(cocktail)
     else:
-        cocktail = 'None'
-    
+        cocktail =  'None'
     print(cocktail)
+
+ 
     return render(request, 'drinks/todays_cocktail.html', {'cocktail': cocktail })
 
 # Class-Based View (CBV)
