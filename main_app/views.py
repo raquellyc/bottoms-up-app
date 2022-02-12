@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import login
@@ -41,7 +42,7 @@ def signup(request):
 
 def generate_drink(request):
     if Survey.liquor_pref == LIQUORS[0][0]:
-        cocktail = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=vodka').json()
+        cocktail = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Vodka').json()
         print(cocktail)
     # elif Survey.liquor_pref == LIQUORS[0][1]:
     #     cocktail = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=gin').json()
@@ -53,7 +54,7 @@ def generate_drink(request):
         cocktail = 'None'
     
     print(cocktail)
-    return render(request, 'drinks/todays_cocktail.html', {'cocktail': cocktail })
+    return render(request, 'drinks/todays_cocktail.html', {'cocktail': cocktail})
 
 # Class-Based View (CBV)
 class SurveyForm(LoginRequiredMixin, CreateView):
