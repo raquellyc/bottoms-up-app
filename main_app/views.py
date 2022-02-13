@@ -7,7 +7,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import ANSWERS1, LIQUORS, Drink, Survey
 import requests, random 
-
 # Create your views here.
 
 def home(request):
