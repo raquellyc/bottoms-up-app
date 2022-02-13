@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'bottomsupapp.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'bottoms-up-app',
+        'NAME': 'bottomsupapp',
     }
 }
 
