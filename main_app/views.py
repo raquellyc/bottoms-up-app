@@ -7,10 +7,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import ANSWERS1, LIQUORS, Drink, Survey
 import requests, random 
-<<<<<<< HEAD
-=======
-
->>>>>>> db036e3 (GENERATE DRINK STEP 2.1)
 # Create your views here.
 
 def home(request):
@@ -61,14 +57,6 @@ def generate_drink(request):
     for all_ids in all_drinks:
         ingredient_choice_ids = all_ids['idDrink']
         index_list.append(ingredient_choice_ids) 
-<<<<<<< HEAD
-<<<<<<< HEAD
-    print(index_list)
-=======
-    # print(index_list)
->>>>>>> db036e3 (GENERATE DRINK STEP 2.1)
-=======
->>>>>>> 23abab0 (we got the ID)
 
     if request.POST['q1'] == ANSWERS1[0][0]:
         cocktails_by_category = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=ordinary_drink').json()
@@ -81,10 +69,6 @@ def generate_drink(request):
         category_choice_ids = all_ids['idDrink']
         index_list2.append(category_choice_ids) 
     print(index_list2)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 23abab0 (we got the ID)
 
     index_list3 = []
     for id in index_list:
@@ -94,15 +78,8 @@ def generate_drink(request):
 
     drink_id = random.choice(index_list3)
     print(drink_id)
-<<<<<<< HEAD
-=======
-    # r = random.choice(cocktail['drinks'])
-    # drink_id = r['idDrink']
-    # print(all_drinks)
-    # print(r)
->>>>>>> db036e3 (GENERATE DRINK STEP 2.1)
-=======
->>>>>>> 23abab0 (we got the ID)
+    final_drink_render = requests.get('https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i={drink_id}').json()
+    print(final_drink_render)
     return render(request, 'drinks/todays_cocktail.html', {
         'cocktails_by_ingredient': cocktails_by_ingredient,
         # 'drink_id': drink_id, 
