@@ -41,14 +41,14 @@ def signup(request):
 
 def generate_drink(request):
     if request.POST['liquor_pref'] == LIQUORS[0][0]:
-        cocktails_by_ingredient = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=vodka').json()
+        cocktails_by_ingredient = requests.get('https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=vodka').json()
       
     elif request.POST['liquor_pref'] == 'G':
-        cocktails_by_ingredient = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=gin').json() 
+        cocktails_by_ingredient = requests.get('https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=gin').json() 
     elif request.POST['liquor_pref'] == 'R':
-        cocktails_by_ingredient = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=rum').json()  
+        cocktails_by_ingredient = requests.get('https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=rum').json()  
     elif request.POST['liquor_pref'] == 'T':
-        cocktails_by_ingredient = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=tequila').json()
+        cocktails_by_ingredient = requests.get('https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=tequila').json()
     else:
        cocktails_by_ingredient =  'None'
 
@@ -59,16 +59,16 @@ def generate_drink(request):
         index_list.append(ingredient_choice_ids) 
 
     if request.POST['q1'] == ANSWERS1[0][0]:
-        cocktails_by_category = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=ordinary_drink').json()
+        cocktails_by_category = requests.get('https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?c=ordinary_drink').json()
     elif request.POST['q1'] == 'P':
-        cocktails_by_category = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=cocktail').json()
+        cocktails_by_category = requests.get('https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?c=cocktail').json()
 
     all_category_drinks = cocktails_by_category['drinks']
     index_list2 = []
     for all_ids in all_category_drinks:
         category_choice_ids = all_ids['idDrink']
         index_list2.append(category_choice_ids) 
-    print(index_list2)
+    # print(index_list2)
 
     index_list3 = []
     for id in index_list:
@@ -78,10 +78,37 @@ def generate_drink(request):
 
     drink_id = random.choice(index_list3)
     print(drink_id)
+    final_drink_render = requests.get('https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=' + drink_id ).json()
+    print(final_drink_render)
+
+    drink_name = final_drink_render['drinks'][0]['strDrink']
+    drink_instructions = final_drink_render['drinks'][0]['strInstructions']
+    drink_pic = final_drink_render['drinks'][0]['strDrinkThumb']
+    drink_ingredient1 = final_drink_render['drinks'][0]['strIngredient1']
+    drink_ingredient2 = final_drink_render['drinks'][0]['strIngredient2']
+    drink_ingredient3 = final_drink_render['drinks'][0]['strIngredient3']
+    drink_ingredient4 = final_drink_render['drinks'][0]['strIngredient4']
+    drink_ingredient5 = final_drink_render['drinks'][0]['strIngredient5']
+    drink_ingredient6 = final_drink_render['drinks'][0]['strIngredient6']
+    drink_ingredient7 = final_drink_render['drinks'][0]['strIngredient7']
+    drink_ingredient8 = final_drink_render['drinks'][0]['strIngredient8']
+    
     return render(request, 'drinks/todays_cocktail.html', {
         'cocktails_by_ingredient': cocktails_by_ingredient,
-        # 'drink_id': drink_id, 
+        'drink_id': drink_id, 
+        'drink_name': drink_name, 
+        'drink_instructions': drink_instructions, 
+        'drink_pic': drink_pic,
+        'drink_ingredient1': drink_ingredient1,
+        'drink_ingredient2': drink_ingredient2,
+        'drink_ingredient3': drink_ingredient3,
+        'drink_ingredient4': drink_ingredient4,
+        'drink_ingredient5': drink_ingredient5,
+        'drink_ingredient6': drink_ingredient6,
+        'drink_ingredient7': drink_ingredient7,
+        'drink_ingredient8': drink_ingredient8,
     })
+
 
 # Class-Based View (CBV)
 class SurveyForm(LoginRequiredMixin, CreateView):
