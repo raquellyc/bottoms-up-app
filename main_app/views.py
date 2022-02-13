@@ -62,10 +62,13 @@ def generate_drink(request):
         ingredient_choice_ids = all_ids['idDrink']
         index_list.append(ingredient_choice_ids) 
 <<<<<<< HEAD
+<<<<<<< HEAD
     print(index_list)
 =======
     # print(index_list)
 >>>>>>> db036e3 (GENERATE DRINK STEP 2.1)
+=======
+>>>>>>> 23abab0 (we got the ID)
 
     if request.POST['q1'] == ANSWERS1[0][0]:
         cocktails_by_category = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=ordinary_drink').json()
@@ -79,6 +82,9 @@ def generate_drink(request):
         index_list2.append(category_choice_ids) 
     print(index_list2)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 23abab0 (we got the ID)
 
     index_list3 = []
     for id in index_list:
@@ -88,12 +94,15 @@ def generate_drink(request):
 
     drink_id = random.choice(index_list3)
     print(drink_id)
+<<<<<<< HEAD
 =======
     # r = random.choice(cocktail['drinks'])
     # drink_id = r['idDrink']
     # print(all_drinks)
     # print(r)
 >>>>>>> db036e3 (GENERATE DRINK STEP 2.1)
+=======
+>>>>>>> 23abab0 (we got the ID)
     return render(request, 'drinks/todays_cocktail.html', {
         'cocktails_by_ingredient': cocktails_by_ingredient,
         # 'drink_id': drink_id, 
