@@ -4,8 +4,8 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import LIQUORS, Drink, Survey
-import requests
+from .models import ANSWERS1, LIQUORS, Drink, Survey
+import requests, random 
 
 # Create your views here.
 
@@ -41,23 +41,43 @@ def signup(request):
 
 def generate_drink(request):
     if request.POST['liquor_pref'] == LIQUORS[0][0]:
-        cocktail = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=vodka').json()
-        print(cocktail)
+        cocktails_by_ingredient = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=vodka').json()
+      
     elif request.POST['liquor_pref'] == 'G':
-        cocktail = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=gin').json()
-        print(cocktail)
+        cocktails_by_ingredient = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=gin').json() 
     elif request.POST['liquor_pref'] == 'R':
-        cocktail = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=rum').json()
-        print(cocktail)
+        cocktails_by_ingredient = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=rum').json()  
     elif request.POST['liquor_pref'] == 'T':
-        cocktail = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=tequila').json()
-        print(cocktail)
+        cocktails_by_ingredient = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=tequila').json()
     else:
-        cocktail =  'None'
-    print(cocktail)
+       cocktails_by_ingredient =  'None'
 
- 
-    return render(request, 'drinks/todays_cocktail.html', {'cocktail': cocktail })
+    all_drinks = cocktails_by_ingredient['drinks']
+    index_list = []
+    for all_ids in all_drinks:
+        ingredient_choice_ids = all_ids['idDrink']
+        index_list.append(ingredient_choice_ids) 
+    # print(index_list)
+
+    if request.POST['q1'] == ANSWERS1[0][0]:
+        cocktails_by_category = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=ordinary_drink').json()
+    elif request.POST['q1'] == 'P':
+        cocktails_by_category = requests.get('https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=cocktail').json()
+
+    all_category_drinks = cocktails_by_category['drinks']
+    index_list2 = []
+    for all_ids in all_category_drinks:
+        category_choice_ids = all_ids['idDrink']
+        index_list2.append(category_choice_ids) 
+    print(index_list2)
+    # r = random.choice(cocktail['drinks'])
+    # drink_id = r['idDrink']
+    # print(all_drinks)
+    # print(r)
+    return render(request, 'drinks/todays_cocktail.html', {
+        'cocktails_by_ingredient': cocktails_by_ingredient,
+        # 'drink_id': drink_id, 
+    })
 
 # Class-Based View (CBV)
 class SurveyForm(LoginRequiredMixin, CreateView):
