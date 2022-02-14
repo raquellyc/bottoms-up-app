@@ -7,5 +7,6 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('drinks/', views.drinks_index, name='index'),
     path('survey/', views.SurveyForm.as_view(), name='survey_form'),
-    path('drinks/generate', views.generate_drink, name='generate_drink')
+    path('drinks/generate', views.generate_drink, name='generate_drink'),
+    path('drinks/add_drink/', views.add_drink, name='add_drink'),
 ]
