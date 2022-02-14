@@ -1,3 +1,8 @@
+from email.policy import default
+import json
+from operator import index
+from pyexpat import model
+from typing import final
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import login
@@ -6,7 +11,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import ANSWERS1, LIQUORS, Drink, Survey
 import requests, random 
-
 # Create your views here.
 
 def home(request):
@@ -74,12 +78,12 @@ def generate_drink(request):
     for id in index_list:
       if id in index_list2:
         index_list3.append(id)
-    print(index_list3)
+    # print(index_list3)
 
     drink_id = random.choice(index_list3)
     print(drink_id)
     final_drink_render = requests.get('https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=' + drink_id ).json()
-    print(final_drink_render)
+    # print(final_drink_render)
 
     drink_name = final_drink_render['drinks'][0]['strDrink']
     drink_instructions = final_drink_render['drinks'][0]['strInstructions']
@@ -109,8 +113,60 @@ def generate_drink(request):
         'drink_ingredient8': drink_ingredient8,
     })
 
+def add_drink(request):
+  # form = SurveyForm(request.POST)
+  # form.save()
+  drinkDataFromAPI = [
+    {'drink_id': request.POST['id']},
+    {'drink_name': request.POST['name']},
+    {'drink_instructions': request.POST['instructions']},
+    {'drink_pic': request.POST['pic']},
+    {'drink_ingredient1': request.POST['drink_ingredient1']},
+    {'drink_ingredient2': request.POST['drink_ingredient2']},
+    {'drink_ingredient3': request.POST['drink_ingredient3']},
+    {'drink_ingredient4': request.POST['drink_ingredient4']},
+    {'drink_ingredient5': request.POST['drink_ingredient5']},
+    {'drink_ingredient6': request.POST['drink_ingredient6']},
+    {'drink_ingredient7': request.POST['drink_ingredient7']},
+    {'drink_ingredient8': request.POST['drink_ingredient8']},
+  ]
+  drink_ingredients = []
+  if drinkDataFromAPI[4].get('drink_ingredient1') != 'None':
+    drink_ingredients.append(drinkDataFromAPI[4])
+  if drinkDataFromAPI[5].get('drink_ingredient2') != 'None':
+    drink_ingredients.append(drinkDataFromAPI[5])
+  if drinkDataFromAPI[6].get('drink_ingredient3') != 'None':
+    drink_ingredients.append(drinkDataFromAPI[6])
+  if drinkDataFromAPI[7].get('drink_ingredient4') != 'None':
+    drink_ingredients.append(drinkDataFromAPI[7])
+  if drinkDataFromAPI[8].get('drink_ingredient5') != 'None':
+    drink_ingredients.append(drinkDataFromAPI[8])
+  if drinkDataFromAPI[9].get('drink_ingredient6') != 'None':
+    drink_ingredients.append(drinkDataFromAPI[9])
+  if drinkDataFromAPI[10].get('drink_ingredient7') != 'None':
+    drink_ingredients.append(drinkDataFromAPI[10])
+  if drinkDataFromAPI[11].get('drink_ingredient8') != 'None':
+    drink_ingredients.append(drinkDataFromAPI[11])
+
+  formatted_data_from_API = []
+  formatted_data_from_API.append(drinkDataFromAPI[0])
+  formatted_data_from_API.append(drinkDataFromAPI[1])
+  formatted_data_from_API.append(drinkDataFromAPI[2])
+  formatted_data_from_API.append(drinkDataFromAPI[3])
+  formatted_data_from_API.append(drink_ingredients)
+  print(formatted_data_from_API)
+  
+  return redirect('index')
+
+
+
 
 # Class-Based View (CBV)
 class SurveyForm(LoginRequiredMixin, CreateView):
   model = Survey
   fields = ['liquor_pref', 'q1', 'q2', 'q3']
+
+# class CreateDrink(CreateView):
+#   model = Drink 
+#   fields = '__all__'
+#   success_url = '/drinks/'
