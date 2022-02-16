@@ -16,42 +16,24 @@ def about(request):
 
 @login_required
 def drinks_index(request):
-  drinks = Drink.objects.all()
+  drinks = Drink.objects.all().order_by('-created_date')
   return render(request, 'drinks/index.html', {'drinks': drinks})
 
 def signup(request):
   error_message = ''
   if request.method == 'POST':
-    # This is how to create a 'user' form object
-    # that includes the data from the browser
     form = UserCreationForm(request.POST)
     if form.is_valid():
-      # This will add the user to the database
       user = form.save()
-      # This is how we log a user in via code
       login(request, user)
       return redirect('/')
     else:
       error_message = 'Invalid sign up - try again'
-  # A bad POST or a GET request, so render signup.html with an empty form
   form = UserCreationForm()
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
 
-
-
 def generate_drink(request):
-    # if request.POST['liquor_pref'] == LIQUORS[0][0]:
-    #     cocktails_by_ingredient = requests.get('https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=vodka').json()  
-    # elif request.POST['liquor_pref'] == 'G':
-    #     cocktails_by_ingredient = requests.get('https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=gin').json() 
-    # elif request.POST['liquor_pref'] == 'R':
-    #     cocktails_by_ingredient = requests.get('https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=rum').json()  
-    # elif request.POST['liquor_pref'] == 'T':
-    #     cocktails_by_ingredient = requests.get('https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=tequila').json()
-    # else:
-    #    cocktails_by_ingredient =  'None'
-
     ALC_LOOKUP = {'V': 'vodka', 'G': 'gin', 'R': 'rum', 'T': 'tequila'}
     alc_type = ALC_LOOKUP[request.POST['liquor_pref']]
     cocktails_by_ingredient = requests.get(f'https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i={alc_type}').json()
@@ -72,18 +54,15 @@ def generate_drink(request):
     for all_ids in all_category_drinks:
         category_choice_ids = all_ids['idDrink']
         index_list2.append(category_choice_ids) 
-    # print(index_list2)
 
     index_list3 = []
     for id in index_list:
       if id in index_list2:
         index_list3.append(id)
-    # print(index_list3)
 
     drink_id = random.choice(index_list3)
     print(drink_id)
     final_drink_render = requests.get('https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=' + drink_id ).json()
-    # print(final_drink_render)
 
     drink_name = final_drink_render['drinks'][0]['strDrink']
     drink_instructions = final_drink_render['drinks'][0]['strInstructions']
@@ -125,7 +104,6 @@ def add_drink(request):
       if data[f'drink_ingredient{i}'] != 'None' and data[f'drink_ingredient{i}'] != '': 
         ingredients.append(data[f'drink_ingredient{i}'])
       del data[f'drink_ingredient{i}'] 
-  
   drink = Drink.objects.create(**data)
   drink.users.add(request.user)
   for ingred in ingredients:
@@ -140,16 +118,19 @@ def add_drink(request):
 
 def drink_detail(request, drink_id):
     drink = Drink.objects.get(id=drink_id)
-    ingredients = drink.ingredients.all()
-    v = ingredients.values()
-    print(v)
+    ingredients_list = list(drink.ingredients.all().values_list('ingredient_name', flat=True))
+    ingredients = str(', '.join(ingredients_list))  
+    print(ingredients)  
     return render(request, 'drinks/detail.html', {
         'drink': drink, 
         'ingredients' : ingredients,
     })
 
-
 # Class-Based View (CBV)
 class SurveyForm(LoginRequiredMixin, CreateView):
   model = Survey
   fields = ['liquor_pref', 'q1', 'q2', 'q3']
+
+class DrinkDelete(LoginRequiredMixin, DeleteView):
+  model = Drink
+  success_url = '/drinks/'

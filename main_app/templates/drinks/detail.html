@@ -9,4 +9,8 @@
     <p>{{ ingredients }}</p>
   </div> 
 
+  <div class="card-action">
+    <a href="{% url 'drink_delete' drink.id %}">Delete</a>
+  </div>
+
 {% endblock %}
