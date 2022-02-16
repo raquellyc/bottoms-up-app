@@ -11,4 +11,11 @@ urlpatterns = [
     path('drinks/add_drink/', views.add_drink, name='add_drink'),
     path('drinks/<int:drink_id>/', views.drink_detail, name='drink_detail'),
     path('drinks/<int:pk>/delete/', views.DrinkDelete.as_view(), name='drink_delete'),
+    path('drinks/<int:drink_id>/assoc_category/<int:category_id>/', views.assoc_category, name="add_category"),
+    path('drinks/<int:drink_id>/unassoc_category/<int:category_id>/', views.unassoc_category, name="remove_category"),
+    path('categories/', views.CategoryList.as_view(), name="categories_index"),
+    path('categories/create/', views.CategoryCreate.as_view(), name="categories_create"),
+    path('categories/<int:pk>/', views.CategoryDetail.as_view(), name="categories_detail"),
+    path('categories/<int:pk>/update/', views.CategoryUpdate.as_view(), name="categories_update"),
+    path('categories/<int:pk>/delete/', views.CategoryDelete.as_view(), name="categories_delete"),
 ]

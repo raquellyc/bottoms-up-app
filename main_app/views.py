@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import ANSWERS1, Drink, Ingredient, Survey
+from .models import ANSWERS1, Category, Drink, Ingredient, Survey
 import requests, random 
 # Create your views here.
 
@@ -119,11 +120,14 @@ def add_drink(request):
 def drink_detail(request, drink_id):
     drink = Drink.objects.get(id=drink_id)
     ingredients_list = list(drink.ingredients.all().values_list('ingredient_name', flat=True))
-    ingredients = str(', '.join(ingredients_list))  
+    ingredients = str(', '.join(ingredients_list))
+    category_ids = drink.categories.all().values_list('id')
+    categories = Category.objects.exclude(id__in=category_ids)
     print(ingredients)  
     return render(request, 'drinks/detail.html', {
         'drink': drink, 
         'ingredients' : ingredients,
+        'categories' : categories,
     })
 
 # Class-Based View (CBV)
@@ -134,3 +138,31 @@ class SurveyForm(LoginRequiredMixin, CreateView):
 class DrinkDelete(LoginRequiredMixin, DeleteView):
   model = Drink
   success_url = '/drinks/'
+
+class CategoryList(ListView):
+  model = Category
+
+class CategoryDetail(DetailView):
+  model = Category
+
+class CategoryCreate(CreateView):
+  model = Category
+  fields = '__all__'
+
+class CategoryUpdate(UpdateView):
+  model = Category
+  fields = ['name']
+
+class CategoryDelete(DeleteView):
+  model = Category
+  success_url =  '/categories/'
+
+def assoc_category(request, drink_id, category_id):
+  drink = Drink.objects.get(id=drink_id)
+  drink.categories.add(category_id)
+  return redirect ('drink_detail', drink_id=drink_id)
+
+def unassoc_category(request, drink_id, category_id):
+  drink = Drink.objects.get(id=drink_id)
+  drink.categories.remove(category_id)
+  return redirect ('drink_detail', drink_id=drink_id)
