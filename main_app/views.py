@@ -123,9 +123,13 @@ def add_drink(request):
 def drink_detail(request, drink_id):
     drink = Drink.objects.get(id=drink_id)
     ingredients_list = list(drink.ingredients.all().values_list('ingredient_name', flat=True))
+<<<<<<< HEAD
     ingredients = str(', '.join(ingredients_list))
     category_ids = drink.categories.all().values_list('id')
     categories = Category.objects.exclude(id__in=category_ids)
+=======
+    ingredients = str(', '.join(ingredients_list))  
+>>>>>>> f9be4cb (ingredients show correctly on detail page, delete cocktail, and order by date created)
     print(ingredients)  
     return render(request, 'drinks/detail.html', {
         'drink': drink, 
@@ -140,6 +144,7 @@ class SurveyForm(LoginRequiredMixin, CreateView):
 
 class DrinkDelete(LoginRequiredMixin, DeleteView):
   model = Drink
+<<<<<<< HEAD
   success_url = '/drinks/'
 
 class CategoryList(ListView):
@@ -195,3 +200,6 @@ class PhotoDelete(DeleteView):
   model = Photo
   success_url = '/drinks/'
   
+=======
+  success_url = '/drinks/'
+>>>>>>> f9be4cb (ingredients show correctly on detail page, delete cocktail, and order by date created)

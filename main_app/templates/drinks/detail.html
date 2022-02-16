@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<<<<<<< HEAD
 <div class="container center-align">
 <div class="section">
     <h1 class="grey-text text-darken-1">{{ drink.drink_name }}</h1>
@@ -83,5 +84,18 @@
   <a class="waves-effect waves-light btn grey darken-3 white-text" href="{% url 'drink_delete' drink.id %}">Delete Cocktail</a>
 </div>
 </div>
+=======
+<div>
+    <h1>{{ drink.drink_name }}</h1>
+    <p> {{ drink.drink_instructions }}</p>
+    <img src="{{ drink.drink_pic }}" alt="">
+    <h3>Ingredients:</h3>
+    <p>{{ ingredients }}</p>
+  </div> 
+
+  <div class="card-action">
+    <a href="{% url 'drink_delete' drink.id %}">Delete</a>
+  </div>
+>>>>>>> f9be4cb (ingredients show correctly on detail page, delete cocktail, and order by date created)
 
 {% endblock %}
