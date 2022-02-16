@@ -140,12 +140,15 @@ def add_drink(request):
 
 def drink_detail(request, drink_id):
     drink = Drink.objects.get(id=drink_id)
-    ingredients = drink.ingredients.all()
-    v = ingredients.values()
-    print(v)
+    ingredients = list(Ingredient.objects.all().values_list('ingredient_name', flat=True))
+    new_list = str(ingredients)[1:-1]
+    print(new_list.replace("'", ""))
+    # v = ingredients.values()
+    # print(v)
     return render(request, 'drinks/detail.html', {
         'drink': drink, 
-        'ingredients' : ingredients,
+        'ingredient' : ingredients,
+        'new_list' : new_list,
     })
 
 
