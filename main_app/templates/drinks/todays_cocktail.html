@@ -6,21 +6,20 @@
 <div>
     <h1>{{ drink_name }}</h1>
     <h3>Ingredients:</h3>
-    <p>{{ survey.liquor_pref }}</p>
-    <p>{{ drink.ingredient1 }}</p>
+    <p>{{ drink_ingredient1 }}</p>
     <p>{{ drink_ingredient2 }}</p>
      {% if drink_ingredient3 != None %}
     <p> {{ drink_ingredient3 }}</p>
      {% endif %} 
-     {% if drink_ingredient4 != None %} -->
-    <p> {{ drink_ingredient4 }}</p> -->
+     {% if drink_ingredient4 != None %}
+    <p> {{ drink_ingredient4 }}</p> 
      {% endif %}
      {% if drink_ingredient5 != None %}
     <p> {{ drink_ingredient5 }}</p>
      {% endif %}
      {% if drink_ingredient6 != None %}
     <p> {{ drink_ingredient6 }}</p>
-     {% endif %} -->
+     {% endif %} 
     {% if drink_ingredient7 != None %}
     <p> {{ drink_ingredient7 }}</p>
      {% endif %}
@@ -33,10 +32,10 @@
   <img class="card-panel" id="drinkpic" src="{{ drink_pic }}">
   <form action="{% url 'add_drink' %}" method="POST">
       {% csrf_token %}
-    <input type="hidden" name="id" value="{{ drink_id }}">
-    <input type="hidden" name="name" value="{{ drink_name }}">
-    <input type="hidden" name="instructions" value="{{ drink_instructions }}">
-    <input type="hidden" name="pic" value="{{ drink_pic }}">
+    <input type="hidden" name="drink_id" value="{{ drink_id }}">
+    <input type="hidden" name="drink_name" value="{{ drink_name }}">
+    <input type="hidden" name="drink_instructions" value="{{ drink_instructions }}">
+    <input type="hidden" name="drink_pic" value="{{ drink_pic }}">
     <input type="hidden" name="drink_ingredient1" value="{{ drink_ingredient1 }}"> 
     <input type="hidden" name="drink_ingredient2" value="{{ drink_ingredient2 }}"> 
     <input type="hidden" name="drink_ingredient3" value="{{ drink_ingredient3 }}"> 

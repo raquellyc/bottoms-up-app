@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.forms import CharField
 # Create your models here.
 
 LIQUORS = (
@@ -22,16 +23,32 @@ ANSWERS3 = (
     ('R', 'Relaxation'),
 )
 
+# INGREDIENTS = (
+#     ('1', 'drink_ingredient1'),
+#     ('2', 'drink_ingredient2'),
+#     ('3', 'drink_ingredient3'),
+#     ('4', 'drink_ingredient4'),
+#     ('5', 'drink_ingredient5'),
+#     ('6', 'drink_ingredient6'),
+#     ('7', 'drink_ingredient7'),
+#     ('8', 'drink_ingredient8'),
+# )
+
+
+class Ingredient(models.Model):
+    ingredient_name = models.CharField(max_length=50)
+    def __str__(self):
+        return f'{self.ingredient_name}'
 
 class Drink(models.Model):
-    name = models.CharField(max_length=100)
-    ingredients = models.TextField(max_length=250)
-    instructions = models.TextField(max_length=500)
-    image = models.CharField(max_length=100)
-
+    drink_id = models.CharField(max_length=10)
+    drink_name = models.CharField(max_length=100)
+    drink_instructions = models.TextField(max_length=500)
+    drink_pic = models.CharField(max_length=100)
+    ingredients = models.ManyToManyField(Ingredient)
+    users = models.ManyToManyField(User)
     def __str__(self):
-        return f'{self.name} ({self.id})'
-
+        return f'{self.drink_name} ({self.drink_id})'
 
 
 class Survey(models.Model):
@@ -55,5 +72,8 @@ class Survey(models.Model):
         choices=ANSWERS3,
         default=ANSWERS3[0][0],
     )
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE
+    )
    
-    
