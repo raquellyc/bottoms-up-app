@@ -127,8 +127,15 @@ def add_drink(request):
   return redirect('index')
 
 def drink_detail(request, drink_id):
-    pass
-    return render(request, 'drinks/detail.html')
+    drink = Drink.objects.get(id=drink_id)
+    ingredients = drink.ingredients.all()
+    v = ingredients.values()
+    print(v)
+    return render(request, 'drinks/detail.html', {
+        'drink': drink, 
+        'ingredients' : ingredients,
+    })
+
 
 # Class-Based View (CBV)
 class SurveyForm(LoginRequiredMixin, CreateView):
