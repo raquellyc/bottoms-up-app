@@ -3,7 +3,14 @@
 
 <h1>Drink List</h1>
 
-
-
-
+{% for drink in drinks %}
+  <div class="card">
+      <a href="{% url 'drink_detail' drink.id %}">View Cocktail</a>
+      <div class="card-content">
+        <p>Drink Name: {{ drink.drink_name }}</p>
+        <img src="{{ drink.drink_pic }}" alt="">
+      </div>
+    </a>
+  </div>
+{% endfor %}
 {% endblock %}
