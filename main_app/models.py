@@ -23,16 +23,7 @@ ANSWERS3 = (
     ('R', 'Relaxation'),
 )
 
-# INGREDIENTS = (
-#     ('1', 'drink_ingredient1'),
-#     ('2', 'drink_ingredient2'),
-#     ('3', 'drink_ingredient3'),
-#     ('4', 'drink_ingredient4'),
-#     ('5', 'drink_ingredient5'),
-#     ('6', 'drink_ingredient6'),
-#     ('7', 'drink_ingredient7'),
-#     ('8', 'drink_ingredient8'),
-# )
+
 
 
 class Ingredient(models.Model):
