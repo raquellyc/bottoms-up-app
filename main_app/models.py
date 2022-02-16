@@ -1,7 +1,11 @@
+from statistics import mode
+from tabnanny import verbose
+from unicodedata import category
 from django.db import models
 from django.contrib.auth.models import User
 from django.forms import CharField
 from django.utils import timezone
+from django.urls import reverse
 # Create your models here.
 
 LIQUORS = (
@@ -24,13 +28,28 @@ ANSWERS3 = (
     ('R', 'Relaxation'),
 )
 
-
-
-
 class Ingredient(models.Model):
     ingredient_name = models.CharField(max_length=50)
     def __str__(self):
         return f'{self.ingredient_name}'
+
+    class Meta:
+        verbose_name = 'ingredient'
+        verbose_name_plural = 'ingredients'
+
+class Category(models.Model):
+    name = models.CharField(max_length=50)
+    def __str__(self):
+        return self.name 
+
+    class Meta:
+        ordering = ['name']
+        verbose_name = 'category'
+        verbose_name_plural = 'categories'
+
+    def get_absolute_url(self):
+        return reverse('categories_index')
+
 
 class Drink(models.Model):
     drink_id = models.CharField(max_length=10)
@@ -40,6 +59,7 @@ class Drink(models.Model):
     ingredients = models.ManyToManyField(Ingredient)
     users = models.ManyToManyField(User)
     created_date = models.DateTimeField('date created', default=timezone.now)
+    categories = models.ManyToManyField(Category)
     def __str__(self):
         return f'{self.drink_name} ({self.drink_id})'
 

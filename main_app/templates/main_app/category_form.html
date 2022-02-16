@@ -1,0 +1,18 @@
+
+Andrea Sisneros (She/Her) - ABQ  12:21 PM
+{% extends 'base.html' %}
+
+{% block content %}
+{% if object %}
+<h1 >Edit <span>{{object.name}}</span></h1>
+{% else %}
+<h1>Add Cocktail Category</h1>
+{% endif %}
+<form action="" method="POST">
+    {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    </table>
+    <button class="waves-effect waves-light btn green lighten-1" type="submit" value="Submit" class="btn">Submit</button>
+</form>
+{% endblock %}
