@@ -28,7 +28,10 @@
                         {% if user.is_authenticated %}
                         <li><a href="{% url 'survey_form' %}">Generate A New Cocktail</a></li>
                         <li><a href="{% url 'index' %}">Drink List</a></li>
+                        <li><a href="{% url 'categories_index' %}">Cocktail Categories</a></li>
+                        <li><a href="{% url 'categories_create' %}">Add Cocktail Category</a></li>
                         <li><a href="{% url 'logout' %}">Log Out</a></li>
+
                         {% else %}
                         <li><a href="{% url 'signup' %}">Sign Up</a></li>
                         <li><a href="{% url 'login' %}">Log In</a></li>
