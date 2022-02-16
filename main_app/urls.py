@@ -9,4 +9,5 @@ urlpatterns = [
     path('survey/', views.SurveyForm.as_view(), name='survey_form'),
     path('drinks/generate', views.generate_drink, name='generate_drink'),
     path('drinks/add_drink/', views.add_drink, name='add_drink'),
+    path('drinks/<int:drink_id>/', views.drink_detail, name='drink_detail'),
 ]

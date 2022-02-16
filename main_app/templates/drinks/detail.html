@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div>
+    <h1>{{ drink.drink_name }}</h1>
+    <p> {{ drink.drink_instructions }}</p>
+    <img src="{{ drink.drink_pic }}" alt="">
+    <h3>Ingredients:</h3>
+    <p>{{ ingredients }}</p>
+  </div> 
+
+{% endblock %}
