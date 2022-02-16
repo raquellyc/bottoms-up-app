@@ -123,8 +123,7 @@ def drink_detail(request, drink_id):
     print(ingredients)  
     return render(request, 'drinks/detail.html', {
         'drink': drink, 
-        'ingredient' : ingredients,
-        'new_list' : new_list,
+        'ingredients' : ingredients,
     })
 
 # Class-Based View (CBV)
