@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div>
+    <h1>{{ drink.drink_name }}</h1>
+    <p> {{ drink.drink_instructions }}</p>
+    <img src="{{ drink.drink_pic }}" alt="">
+    <h3>Ingredients:</h3>
+    <p>{{ ingredients }}</p>
+  </div> 
+
+  <div class="card-action">
+    <a href="{% url 'drink_delete' drink.id %}">Delete</a>
+  </div>
+
+{% endblock %}

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.forms import CharField
+from django.utils import timezone
 # Create your models here.
 
 LIQUORS = (
@@ -38,6 +39,7 @@ class Drink(models.Model):
     drink_pic = models.CharField(max_length=100)
     ingredients = models.ManyToManyField(Ingredient)
     users = models.ManyToManyField(User)
+    created_date = models.DateTimeField('date created', default=timezone.now)
     def __str__(self):
         return f'{self.drink_name} ({self.drink_id})'
 
