@@ -1,15 +1,10 @@
-from email.policy import default
-import json
-from operator import index
-from pyexpat import model
-from typing import final
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import ANSWERS1, LIQUORS, Drink, Survey
+from .models import ANSWERS1, Drink, Ingredient, Survey
 import requests, random 
 # Create your views here.
 
@@ -43,18 +38,23 @@ def signup(request):
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
 
+
+
 def generate_drink(request):
-    if request.POST['liquor_pref'] == LIQUORS[0][0]:
-        cocktails_by_ingredient = requests.get('https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=vodka').json()
-      
-    elif request.POST['liquor_pref'] == 'G':
-        cocktails_by_ingredient = requests.get('https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=gin').json() 
-    elif request.POST['liquor_pref'] == 'R':
-        cocktails_by_ingredient = requests.get('https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=rum').json()  
-    elif request.POST['liquor_pref'] == 'T':
-        cocktails_by_ingredient = requests.get('https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=tequila').json()
-    else:
-       cocktails_by_ingredient =  'None'
+    # if request.POST['liquor_pref'] == LIQUORS[0][0]:
+    #     cocktails_by_ingredient = requests.get('https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=vodka').json()  
+    # elif request.POST['liquor_pref'] == 'G':
+    #     cocktails_by_ingredient = requests.get('https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=gin').json() 
+    # elif request.POST['liquor_pref'] == 'R':
+    #     cocktails_by_ingredient = requests.get('https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=rum').json()  
+    # elif request.POST['liquor_pref'] == 'T':
+    #     cocktails_by_ingredient = requests.get('https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i=tequila').json()
+    # else:
+    #    cocktails_by_ingredient =  'None'
+
+    ALC_LOOKUP = {'V': 'vodka', 'G': 'gin', 'R': 'rum', 'T': 'tequila'}
+    alc_type = ALC_LOOKUP[request.POST['liquor_pref']]
+    cocktails_by_ingredient = requests.get(f'https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?i={alc_type}').json()
 
     all_drinks = cocktails_by_ingredient['drinks']
     index_list = []
@@ -114,59 +114,31 @@ def generate_drink(request):
     })
 
 def add_drink(request):
-  # form = SurveyForm(request.POST)
-  # form.save()
-  drinkDataFromAPI = [
-    {'drink_id': request.POST['id']},
-    {'drink_name': request.POST['name']},
-    {'drink_instructions': request.POST['instructions']},
-    {'drink_pic': request.POST['pic']},
-    {'drink_ingredient1': request.POST['drink_ingredient1']},
-    {'drink_ingredient2': request.POST['drink_ingredient2']},
-    {'drink_ingredient3': request.POST['drink_ingredient3']},
-    {'drink_ingredient4': request.POST['drink_ingredient4']},
-    {'drink_ingredient5': request.POST['drink_ingredient5']},
-    {'drink_ingredient6': request.POST['drink_ingredient6']},
-    {'drink_ingredient7': request.POST['drink_ingredient7']},
-    {'drink_ingredient8': request.POST['drink_ingredient8']},
-  ]
-  drink_ingredients = []
-  if drinkDataFromAPI[4].get('drink_ingredient1') != 'None':
-    drink_ingredients.append(drinkDataFromAPI[4])
-  if drinkDataFromAPI[5].get('drink_ingredient2') != 'None':
-    drink_ingredients.append(drinkDataFromAPI[5])
-  if drinkDataFromAPI[6].get('drink_ingredient3') != 'None':
-    drink_ingredients.append(drinkDataFromAPI[6])
-  if drinkDataFromAPI[7].get('drink_ingredient4') != 'None':
-    drink_ingredients.append(drinkDataFromAPI[7])
-  if drinkDataFromAPI[8].get('drink_ingredient5') != 'None':
-    drink_ingredients.append(drinkDataFromAPI[8])
-  if drinkDataFromAPI[9].get('drink_ingredient6') != 'None':
-    drink_ingredients.append(drinkDataFromAPI[9])
-  if drinkDataFromAPI[10].get('drink_ingredient7') != 'None':
-    drink_ingredients.append(drinkDataFromAPI[10])
-  if drinkDataFromAPI[11].get('drink_ingredient8') != 'None':
-    drink_ingredients.append(drinkDataFromAPI[11])
-
-  formatted_data_from_API = []
-  formatted_data_from_API.append(drinkDataFromAPI[0])
-  formatted_data_from_API.append(drinkDataFromAPI[1])
-  formatted_data_from_API.append(drinkDataFromAPI[2])
-  formatted_data_from_API.append(drinkDataFromAPI[3])
-  formatted_data_from_API.append(drink_ingredients)
-  print(formatted_data_from_API)
+  data = {key: val for key, val in request.POST.items()}
+  drink = Drink.objects.filter(drink_id=data['drink_id'])
+  if drink:
+      drink[0].users.add(request.user)    
+      return redirect('index')
+  del data['csrfmiddlewaretoken']
+  ingredients = []
+  for i in range(1,9):
+      if data[f'drink_ingredient{i}'] != 'None' and data[f'drink_ingredient{i}'] != '': 
+        ingredients.append(data[f'drink_ingredient{i}'])
+      del data[f'drink_ingredient{i}'] 
   
+  drink = Drink.objects.create(**data)
+  drink.users.add(request.user)
+  for ingred in ingredients:
+      ingredient = Ingredient.objects.filter(ingredient_name=ingred)
+      if not ingredient:
+        ingredient = Ingredient.objects.create(ingredient_name=ingred)
+      else:
+        ingredient = ingredient[0]
+      drink.ingredients.add(ingredient)
+
   return redirect('index')
-
-
-
 
 # Class-Based View (CBV)
 class SurveyForm(LoginRequiredMixin, CreateView):
   model = Survey
   fields = ['liquor_pref', 'q1', 'q2', 'q3']
-
-# class CreateDrink(CreateView):
-#   model = Drink 
-#   fields = '__all__'
-#   success_url = '/drinks/'
