@@ -90,3 +90,12 @@ class Survey(models.Model):
         on_delete=models.CASCADE
     )
    
+class Photo(models.Model):
+  url = models.CharField(max_length=200)
+  drink = models.ForeignKey(Drink, on_delete=models.CASCADE)
+
+  def get_absolute_url(self):
+        return reverse('drink_details')
+
+  def __str__(self):
+    return f'Photo for drink_id: {self.drink_id} @{self.url}'
