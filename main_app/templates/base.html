@@ -17,14 +17,12 @@
     <!-- so I have it above in a style tag, will fix this later -->
 </head>
 <body>
-    <h1>BOTTOMS UP!</h1>
     <header class="navbar-fixed">
-        <nav>
+        <nav class="grey darken-3">
             <div class="nav-wrapper">
-                <nav>
                     <ul>
                         <li><a href="{% url 'home' %}">Home</a></li>
-                        <li><a href="{% url 'about' %}">About</a></li>
+                        <li><a class="white-text" href="{% url 'about' %}">About</a></li>
                         {% if user.is_authenticated %}
                         <li><a href="{% url 'survey_form' %}">Generate A New Cocktail</a></li>
                         <li><a href="{% url 'index' %}">Drink List</a></li>
@@ -37,7 +35,6 @@
                         <li><a href="{% url 'login' %}">Log In</a></li>
                       {% endif %}
                     </ul>
-                </nav>
             </div>
         </nav>
     </header>
@@ -45,7 +42,10 @@
         {% block content %}
         {% endblock %}
     </main>
-    <footer class="page-footer">
+    <div class="right-align">
+        <img class="responsive-img" src="https://i.imgur.com/OPY4MSI.png" alt="">
+    </div>
+    <footer class="grey darken-3 white-text">
         <div class="right">All Rights Reserved, &copy; 2022 Bottoms Up! &nbsp;</div>
      </footer>
 </body>
