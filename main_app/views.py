@@ -1,3 +1,6 @@
+import os 
+import boto3
+import uuid
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
@@ -5,7 +8,7 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import ANSWERS1, Category, Drink, Ingredient, Survey
+from .models import ANSWERS1, Category, Drink, Ingredient, Survey, Photo
 import requests, random 
 # Create your views here.
 
@@ -166,3 +169,29 @@ def unassoc_category(request, drink_id, category_id):
   drink = Drink.objects.get(id=drink_id)
   drink.categories.remove(category_id)
   return redirect ('drink_detail', drink_id=drink_id)
+
+
+@login_required
+def add_photo(request, drink_id):
+  # photo-file wil be the "name" attribute of the input
+  photo_file = request.FILES.get('photo-file', None)
+  if photo_file:
+    s3 = boto3.client('s3')
+    # need a unique "key" for s3 
+    # need the same file extension as well
+    key = uuid.uuid4().hex[:6] + photo_file.name[photo_file.name.rfind('.'):]
+    try: 
+      bucket = os.environ['S3_BUCKET']
+      s3.upload_fileobj(photo_file, bucket, key)
+      # build the full url string
+      url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
+      Photo.objects.create(url=url, drink_id=drink_id)
+    except Exception as e:
+      print('An error occurred uploading to S3')
+      print(e)
+  return redirect('drink_detail', drink_id=drink_id)
+
+class PhotoDelete(DeleteView):
+  model = Photo
+  success_url = '/drinks/'
+  
