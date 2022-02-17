@@ -11,7 +11,6 @@ urlpatterns = [
     path('drinks/add_drink/', views.add_drink, name='add_drink'),
     path('drinks/<int:drink_id>/', views.drink_detail, name='drink_detail'),
     path('drinks/<int:pk>/delete/', views.DrinkDelete.as_view(), name='drink_delete'),
-<<<<<<< HEAD
     path('drinks/<int:drink_id>/assoc_category/<int:category_id>/', views.assoc_category, name="add_category"),
     path('drinks/<int:drink_id>/unassoc_category/<int:category_id>/', views.unassoc_category, name="remove_category"),
     path('drinks/<int:drink_id>/add_photo/', views.add_photo, name='add_photo'),      
@@ -21,6 +20,4 @@ urlpatterns = [
     path('categories/<int:pk>/', views.CategoryDetail.as_view(), name="categories_detail"),
     path('categories/<int:pk>/update/', views.CategoryUpdate.as_view(), name="categories_update"),
     path('categories/<int:pk>/delete/', views.CategoryDelete.as_view(), name="categories_delete"),
-=======
->>>>>>> f9be4cb (ingredients show correctly on detail page, delete cocktail, and order by date created)
 ]

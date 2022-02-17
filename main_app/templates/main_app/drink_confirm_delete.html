@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<<<<<<< HEAD
 <div class="section">
   <h1 class="grey-text text-darken-1">Delete Drink</h1>
 
@@ -14,15 +13,3 @@
   </form>
 </div>
 {% endblock %}
-=======
-  <h1>Delete Drink</h1>
-
-  <h4>Are you sure you want to delete <span class="teal-text">{{ object.name }}</span>?</h4>
-
-  <form action="" method="POST">
-    {% csrf_token %}
-    <input type="submit" value="Yes - Delete!" class="btn">
-    <a href="{% url 'drink_detail' drink.id %}">Cancel</a>
-  </form>
-{% endblock %}
->>>>>>> f9be4cb (ingredients show correctly on detail page, delete cocktail, and order by date created)

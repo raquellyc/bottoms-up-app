@@ -5,10 +5,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.forms import CharField
 from django.utils import timezone
-<<<<<<< HEAD
 from django.urls import reverse
-=======
->>>>>>> f9be4cb (ingredients show correctly on detail page, delete cocktail, and order by date created)
 # Create your models here.
 
 LIQUORS = (
@@ -62,10 +59,7 @@ class Drink(models.Model):
     ingredients = models.ManyToManyField(Ingredient)
     users = models.ManyToManyField(User)
     created_date = models.DateTimeField('date created', default=timezone.now)
-<<<<<<< HEAD
     categories = models.ManyToManyField(Category)
-=======
->>>>>>> f9be4cb (ingredients show correctly on detail page, delete cocktail, and order by date created)
     def __str__(self):
         return f'{self.drink_name} ({self.drink_id})'
 

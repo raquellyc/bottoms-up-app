@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<<<<<<< HEAD
 <div class="section">
   <h1 class="grey-text text-darken-1">{{ drink_name }}</h1>
   <h3 class="grey-text text-darken-1">Ingredients:</h3>
@@ -44,50 +43,6 @@
   <input type="hidden" name="drink_ingredient7" value="{{ drink_ingredient7 }}">
   <input type="hidden" name="drink_ingredient8" value="{{ drink_ingredient8 }}">
   <button class="waves-effect waves-light btn grey darken-3 white-text" type="submit" class="btn">Save Drink!</button>
-=======
-<div>
-    <h1>{{ drink_name }}</h1>
-    <h3>Ingredients:</h3>
-    <p>{{ drink_ingredient1 }}</p>
-    <p>{{ drink_ingredient2 }}</p>
-     {% if drink_ingredient3 != None %}
-    <p> {{ drink_ingredient3 }}</p>
-     {% endif %} 
-     {% if drink_ingredient4 != None %}
-    <p> {{ drink_ingredient4 }}</p> 
-     {% endif %}
-     {% if drink_ingredient5 != None %}
-    <p> {{ drink_ingredient5 }}</p>
-     {% endif %}
-     {% if drink_ingredient6 != None %}
-    <p> {{ drink_ingredient6 }}</p>
-     {% endif %} 
-    {% if drink_ingredient7 != None %}
-    <p> {{ drink_ingredient7 }}</p>
-     {% endif %}
-     {% if drink_ingredient8 != None %}
-    <p> {{ drink_ingredient8 }}</p>
-     {% endif %}
-  </div> 
-  <h3>Instructions:</h3>
-  <p>{{ drink_instructions }}</p>
-  <img class="card-panel" id="drinkpic" src="{{ drink_pic }}">
-  <form action="{% url 'add_drink' %}" method="POST">
-      {% csrf_token %}
-    <input type="hidden" name="drink_id" value="{{ drink_id }}">
-    <input type="hidden" name="drink_name" value="{{ drink_name }}">
-    <input type="hidden" name="drink_instructions" value="{{ drink_instructions }}">
-    <input type="hidden" name="drink_pic" value="{{ drink_pic }}">
-    <input type="hidden" name="drink_ingredient1" value="{{ drink_ingredient1 }}"> 
-    <input type="hidden" name="drink_ingredient2" value="{{ drink_ingredient2 }}"> 
-    <input type="hidden" name="drink_ingredient3" value="{{ drink_ingredient3 }}"> 
-    <input type="hidden" name="drink_ingredient4" value="{{ drink_ingredient4 }}"> 
-    <input type="hidden" name="drink_ingredient5" value="{{ drink_ingredient5 }}"> 
-    <input type="hidden" name="drink_ingredient6" value="{{ drink_ingredient6 }}"> 
-    <input type="hidden" name="drink_ingredient7" value="{{ drink_ingredient7 }}"> 
-    <input type="hidden" name="drink_ingredient8" value="{{ drink_ingredient8 }}"> 
-    <button type="submit" class="btn">Save Drink!</button>
->>>>>>> f9be4cb (ingredients show correctly on detail page, delete cocktail, and order by date created)
 </form>
 
 {% endblock %}

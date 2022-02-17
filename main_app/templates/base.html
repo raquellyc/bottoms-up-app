@@ -13,21 +13,21 @@
 </head>
 <body>
     <header class="navbar-fixed">
-        <nav class="white">
+        <nav class="grey darken-2">
             <div class="nav-wrapper">
                     <ul>
                         <li><img src="{% static 'images/bottomsup_logo.svg' %}" class="logo"></li>
                     </ul>
                     <ul class="right">
-                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a class="white-text" href="{% url 'home' %}">Home</a></li>
                         <li><a class="white-text" href="{% url 'about' %}">About</a></li>
                         {% if user.is_authenticated %}
                 
-                        <li><a href="{% url 'survey_form' %}">Generate A New Cocktail</a></li>
-                        <li><a href="{% url 'index' %}">Drink List</a></li>
-                        <li><a href="{% url 'categories_index' %}">Cocktail Categories</a></li>
-                        <li><a href="{% url 'categories_create' %}">Add Cocktail Category</a></li>
-                        <li><a href="{% url 'logout' %}">Log Out</a></li>
+                        <li><a class="white-text" href="{% url 'survey_form' %}">Generate A New Cocktail</a></li>
+                        <li><a class="white-text" href="{% url 'index' %}">Drink List</a></li>
+                        <li><a class="white-text" href="{% url 'categories_index' %}">Cocktail Categories</a></li>
+                        <li><a class="white-text" href="{% url 'categories_create' %}">Add Cocktail Category</a></li>
+                        <li><a class="white-text" href="{% url 'logout' %}">Log Out</a></li>
 
                         {% else %}
                         <li><a href="{% url 'signup' %}">Sign Up</a></li>
@@ -41,9 +41,10 @@
         {% block content %}
         {% endblock %}
     </main>
-    <footer class="transparent">
+    <img class="responsive-img" src="https://i.imgur.com/OPY4MSI.png" alt="">
+    <footer class="grey darken-2">
     <div class="right-align">
-        <img class="responsive-img" src="https://i.imgur.com/OPY4MSI.png" alt="">
+        <p class="white-text">All Rigthts Reserved &copy; Buttoms up! 2022 &nbsp</p>
     </div>
 </body>
 </html>

@@ -2,26 +2,26 @@
 {% block content %}
 
 <div class="section" id="drink_index">
-  <h1 class="grey-text text-darken-1">Drink List</h1>
+  <h1>Drink List</h1>
 
   {% for drink in drinks %}
-<div class="row">
-  <div class="col s12 m6 l3">
-  <div class="col s12 m6 l3">
-    <div class="card medium z-depth-3">
-      <div class="card-image">
-        <img src="{{ drink.drink_pic }}">
+  <div class="row">
+    <div class="col s6">
+        <div class="card medium z-depth-3">
+          <div class="card-image">
+            <img src="{{ drink.drink_pic }}">
+          </div>
+          <div class="card-content">
+            <p>Drink Name: {{ drink.drink_name }}</p>
+            {% for category in drink.categories.all %}
+            <p>Category: {{ category.name }}</p>
+            {% endfor %}
+          </div>
+          <div class="card-action">
+            <a class="waves-effect waves-light btn grey darken-3 white-text"
+              href="{% url 'drink_detail' drink.id %}">View Cocktail</a>
+          </div>
       </div>
-      <div class="card-content">
-        <h3>{{ drink.drink_name }}</h3>
-      </div>
-      <div class="card-action">
-        <a class="waves-effect waves-light btn grey darken-3 white-text" href="{% url 'drink_detail' drink.id %}">View Cocktail</a>
-      </div>
-    </div>
-  </div>
-  </div>
 </div>
-{% endfor %}
-
-{% endblock %}
+        {% endfor %}
+        {% endblock %}
