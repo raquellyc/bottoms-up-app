@@ -2,28 +2,10 @@ body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
-  background-color: #fcf2de;
-
 }
 
-  main {
+main {
     flex: 1 0 auto;
-}
-
-  footer.page-footer {
-    padding-top: 5vh;
-    text-align: center;
-}
-
-nav {
-  background-color: white;
-  list-style: none;
-
-}
-
-nav ul a {
-  text-align: left;
-  color: gray;
 }
 
 img.logo {
@@ -32,4 +14,9 @@ img.logo {
   margin: auto;
   padding-left: 2vh;
   padding-top: 1vh;
+}
+
+.responsive-img {
+  width: 300px;
+  height: 300px;
 }

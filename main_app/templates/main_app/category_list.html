@@ -2,19 +2,27 @@
 {% block content %}
 
 <div class="section">
-    <h1 class="grey-text text-darken-1">Category List</h1>
-
-    {% for category in category_list %}
-    <div class="col s12 m2">
-        <a href="{% url 'categories_detail' category.id %}">
-            <div class="card grey darken-3 z-depth-3">
-                <div class="card-content white-text">
-                    <span class="card-title">{{ category.name }}</span>
-                </div>
+<h1 class="grey-text text-darken-1">Category List</h1>
+<div class="row">
+        {% for category in category_list %}
+        <div>
+            <div class="card-content white-text">
+                <h4 class="card-title grey-text">{{ category }}</h4>
+                <form action="{% url 'categories_detail' category.id %}">
+                    {% csrf_token %}
+                    <button class="waves-effect waves-light btn grey darken-3 white-text" type="submit">Category Details</button>
+                </form>
             </div>
-        </a>
+        
+        <h6 class="grey-text text-darken-1">Cocktails in this category:</h6>
+        {% for drink in category.drink_set.all %}
+        <h6 class="grey-text">{{ drink.drink_name }}</h6>
+        {% empty %}
+        <p class="grey-text">No Drinks have been added to this category yet</p>
+        {% endfor %}
+        </div>
+        {% endfor %}
     </div>
 </div>
-{% endfor %}
-
+</div>
 {% endblock %}
