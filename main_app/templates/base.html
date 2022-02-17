@@ -9,7 +9,6 @@
     <title>Bottoms Up!</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <!-- I have no idea why I can't get the image size to work in the style sheet -->
     <style>img {width: 300px;}
@@ -18,12 +17,16 @@
 </head>
 <body>
     <header class="navbar-fixed">
-        <nav class="grey darken-3">
+        <nav class="white">
             <div class="nav-wrapper">
                     <ul>
+                        <li><img src="{% static 'images/bottomsup_logo.svg' %}" class="logo"></li>
+                    </ul>
+                    <ul class="right">
                         <li><a href="{% url 'home' %}">Home</a></li>
                         <li><a class="white-text" href="{% url 'about' %}">About</a></li>
                         {% if user.is_authenticated %}
+                
                         <li><a href="{% url 'survey_form' %}">Generate A New Cocktail</a></li>
                         <li><a href="{% url 'index' %}">Drink List</a></li>
                         <li><a href="{% url 'categories_index' %}">Cocktail Categories</a></li>
@@ -42,11 +45,9 @@
         {% block content %}
         {% endblock %}
     </main>
+    <footer class="transparent">
     <div class="right-align">
         <img class="responsive-img" src="https://i.imgur.com/OPY4MSI.png" alt="">
     </div>
-    <footer class="grey darken-3 white-text">
-        <div class="right">All Rights Reserved, &copy; 2022 Bottoms Up! &nbsp;</div>
-     </footer>
 </body>
 </html>
