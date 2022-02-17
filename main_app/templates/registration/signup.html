@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Sign Up</h1>
+<div class="section">
+<h1 class="grey-text text-darken-1">Sign Up</h1>
 
 {% if error_message %}<p class="red-text">{{ error_message }}</p>{% endif %}
 
 <form method="post" action="{% url 'signup' %}">
   {% csrf_token %}
   {{ form.as_p }}
-  <input type="submit" class="btn" value="signup">
+  <button class="waves-effect waves-light btn grey darken-3 white-text" type="submit" value="Submit" class="btn">Signup</button>
 </form>
+</div>
 
 {% endblock %}

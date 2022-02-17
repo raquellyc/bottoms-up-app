@@ -1,15 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h1>Category List</h1>
+<div class="section">
+    <h1 class="grey-text text-darken-1">Category List</h1>
 
-{% for category in category_list %}
-<div class="col s12 m2">
-    <a href="{% url 'categories_detail' category.id %}">
-            <div class="card-content">
-                <span class="card-title">{{ category.name }}</span>
+    {% for category in category_list %}
+    <div class="col s12 m2">
+        <a href="{% url 'categories_detail' category.id %}">
+            <div class="card grey darken-3 z-depth-3">
+                <div class="card-content white-text">
+                    <span class="card-title">{{ category.name }}</span>
+                </div>
             </div>
-    </a>
+        </a>
+    </div>
 </div>
 {% endfor %}
 
