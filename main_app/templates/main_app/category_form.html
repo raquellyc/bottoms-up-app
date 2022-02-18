@@ -3,9 +3,9 @@
 
 <div class="section">
     {% if object %}
-    <h1 class="grey-text text-darken-1">Edit <span>{{object.name}}</span></h1>
+    <h1 class="grey-text text-darken-3">Edit <span>{{object.name}}</span></h1>
     {% else %}
-    <h1 class="grey-text text-darken-1">Add Cocktail Category</h1>
+    <h1 class="grey-text text-darken-3">Add Cocktail Category</h1>
     {% endif %}
     <form action="" method="POST">
         {% csrf_token %}

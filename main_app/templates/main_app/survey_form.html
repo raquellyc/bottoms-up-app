@@ -6,15 +6,15 @@
     <img class="circle responsive-img" src="https://i.imgur.com/iAfqXM9.png" alt="">
     <h4 class="grey-text text-darken-1">Welcome to Bottoms Up! Please fill out information about your day below.</h4>
   </div>
-
-  <form class="browser-default" action="{% url 'generate_drink' %}" method="POST">
+  <form class="grey-text text-darken-1" action="{% url 'generate_drink' %}" method="POST">
     {% csrf_token %}
     <table>
       {{ form.as_table }}
     </table>
     <div class="section">
-    <button class="waves-effect waves-light btn grey darken-3 white-text" type="submit" value="Submit" class="btn">Get My Drink!</button>
-  </div>
+      <button class="waves-effect waves-light btn grey darken-3 white-text" type="submit" value="Submit" class="btn">Get
+        My Drink!</button>
+    </div>
   </form>
 
   <script>

@@ -7,18 +7,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bottoms Up!</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.ico' %}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
 <body>
-    <header class="navbar-fixed">
+    <header>
         <nav class="grey darken-2">
             <div class="nav-wrapper">
-                    <ul>
-                        <li><img src="{% static 'images/bottomsup_logo.svg' %}" class="logo"></li>
-                    </ul>
-                    <ul class="right">
+                    <img src="{% static 'images/bu_white.svg' %}" class="logo">
+                    <a href="#!" class="brand-logo">&nbspBottoms Up!</a>
+                    <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                    <ul class="right hide-on-med-and-down">
                         <li><a class="white-text" href="{% url 'home' %}">Home</a></li>
                         <li><a class="white-text" href="{% url 'about' %}">About</a></li>
                         {% if user.is_authenticated %}
@@ -35,16 +37,33 @@
                       {% endif %}
                     </ul>
             </div>
+            <ul class="sidenav" id="mobile-demo">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+                <li><a href="{% url 'survey_form' %}">Generate A New Cocktail</a></li>
+                <li><a href="{% url 'index' %}">Drink List</a></li>
+                <li><a href="{% url 'categories_index' %}">Cocktail Categories</a></li>
+                <li><a href="{% url 'categories_create' %}">Add Cocktail Category</a></li>
+                <li><a href="{% url 'logout' %}">Log Out</a></li>
+              </ul>
+              <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                var elems = document.querySelectorAll('.sidenav');
+                var instances = M.Sidenav.init(elems);
+            });
+          </script>
         </nav>
     </header>
     <main class="container">
         {% block content %}
         {% endblock %}
     </main>
-    <img class="responsive-img" src="https://i.imgur.com/OPY4MSI.png" alt="">
+    <div class="section center-align">
+    <img class="responsive-img" id="background" src="https://i.imgur.com/65UAocj.png" class="logo">
+    </div>
     <footer class="grey darken-2">
     <div class="right-align">
-        <p class="white-text">All Rigthts Reserved &copy; Buttoms up! 2022 &nbsp</p>
+        <p class="white-text">All Rights Reserved, Bottoms Up! &copy; 2022 &nbsp</p>
     </div>
 </body>
 </html>
