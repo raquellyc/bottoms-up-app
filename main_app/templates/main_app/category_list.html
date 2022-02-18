@@ -4,7 +4,6 @@
 <div class="container center-align">
     <div class="section">
         <h1 class="grey-text text-darken-3">Category List</h1>
-        <div class="row">
             {% for category in category_list %}
             <div class="card-content white-text">
                 <h4 class="card-title grey-text text-darken-1">{{ category }}</h4>
@@ -13,7 +12,6 @@
                     <button class="waves-effect waves-light btn grey darken-2 white-text" type="submit">Category
                         Details</button>
                 </form>
-            </div>
 
             <h6 class="grey-text text-darken-4"><strong>Cocktails in this category:</strong></h6>
             {% for drink in category.drink_set.all %}
