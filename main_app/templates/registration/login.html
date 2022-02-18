@@ -2,13 +2,14 @@
 {% block content %}
 
 <div class="section">
-<h1 class="grey-text text-darken-1">Log In</h1>
-<form method="post" action="{% url 'login' %}">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button class="waves-effect waves-light btn grey darken-3 white-text" type="submit" value="Submit" class="btn">Login</button>
-  <input type="hidden" name="next" value="{{ next }}">
-</form>
+  <h1 class="grey-text text-darken-3">Log In</h1>
+  <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="waves-effect waves-light btn grey darken-3 white-text" type="submit" value="Submit"
+      class="btn">Login</button>
+    <input type="hidden" name="next" value="{{ next }}">
+  </form>
 </div>
 
 {% endblock %}

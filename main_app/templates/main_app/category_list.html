@@ -1,28 +1,31 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="section">
-<h1 class="grey-text text-darken-1">Category List</h1>
-<div class="row">
-        {% for category in category_list %}
-        <div>
+<div class="container center-align">
+    <div class="section">
+        <h1 class="grey-text text-darken-3">Category List</h1>
+        <div class="row">
+            {% for category in category_list %}
             <div class="card-content white-text">
-                <h4 class="card-title grey-text">{{ category }}</h4>
+                <h4 class="card-title grey-text text-darken-1">{{ category }}</h4>
                 <form action="{% url 'categories_detail' category.id %}">
                     {% csrf_token %}
-                    <button class="waves-effect waves-light btn grey darken-3 white-text" type="submit">Category Details</button>
+                    <button class="waves-effect waves-light btn grey darken-2 white-text" type="submit">Category
+                        Details</button>
                 </form>
             </div>
-        
-        <h6 class="grey-text text-darken-1">Cocktails in this category:</h6>
-        {% for drink in category.drink_set.all %}
-        <h6 class="grey-text">{{ drink.drink_name }}</h6>
-        {% empty %}
-        <p class="grey-text">No Drinks have been added to this category yet</p>
-        {% endfor %}
+
+            <h6 class="grey-text text-darken-4"><strong>Cocktails in this category:</strong></h6>
+            {% for drink in category.drink_set.all %}
+            <h6 class="grey-text text-darken-2">{{ drink.drink_name }}</h6>
+            {% empty %}
+            <p class="grey-text text-darken-2">No Drinks have been added to this category yet</p>
+            {% endfor %}
+            <hr>
         </div>
         {% endfor %}
     </div>
+</div>
 </div>
 </div>
 {% endblock %}
